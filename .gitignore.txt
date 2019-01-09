@@ -1,2 +1,0 @@
-.idea
-\rms-servlet-web\target
