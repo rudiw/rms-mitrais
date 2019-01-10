@@ -4,13 +4,16 @@
          id="WebApp_ID" version="3.0">
     <display-name>SpringMVC</display-name>
 
+    <!--https://www.codejava.net/coding/jsp-servlet-jdbc-mysql-create-read-update-delete-crud-example-->
+
+    <!--The <servlet> and <servlet-mapping> elements declare and specify URL mapping for the ControllerServlet class.-->
+    <!--The URL pattern /means this is the default servlet to handle all requests.-->
     <servlet>
-        <servlet-name>dispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
+        <servlet-name>controllerServlet</servlet-name>
+        <servlet-class>com.mitrais.rms.controller</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
+        <servlet-name>controllerServlet</servlet-name>
         <url-pattern>/**</url-pattern>
     </servlet-mapping>
 

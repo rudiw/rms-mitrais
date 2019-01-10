@@ -6,3 +6,8 @@
 # Maven
 log/
 target/
+
+#Eclipse
+.settings
+.project
+.classpath
