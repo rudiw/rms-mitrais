@@ -7,10 +7,10 @@ import java.util.Optional;
 /**
  * Provides interface specific to {@link User} data
  */
-public interface UserDao extends Dao<User, Long>
-{
+public interface UserDao extends Dao<User, Long> {
     /**
      * Find {@link User} by its username
+     *
      * @param userName username
      * @return user
      */

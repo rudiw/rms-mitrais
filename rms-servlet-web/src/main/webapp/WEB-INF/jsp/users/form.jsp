@@ -20,6 +20,25 @@
 </head>
 
 <body>
+    <c:if test="${book != null}">
+        <form action="update" method="post">
+    </c:if>
+    <c:if test="${book == null}">
+        <form action="insert" method="post">
+    </c:if>
+     <caption>
+        <h2>
+            <c:if test="${user != null}">
+                Edit Book
+            </c:if>
+            <c:if test="${user == null}">
+                Add New Book
+            </c:if>
+        </h2>
+    </caption>
+        <c:if test="${user != null}">
+            <input type="hidden" name="id" value="<c:out value='${user.id}' />" />
+        </c:if>
     <div class="mdl-layout mdl-js-layout mdl-color--grey-100">
     	<main class="mdl-layout__content">
     		<div class="mdl-card mdl-shadow--6dp">
@@ -29,21 +48,22 @@
     	  	<div class="mdl-card__supporting-text">
     				<form action="#">
     					<div class="mdl-textfield mdl-js-textfield">
-    						<input class="mdl-textfield__input" type="text" id="username" />
+    						<input class="mdl-textfield__input" type="text" id="username" value="${user.userName}" />
     						<label class="mdl-textfield__label" for="username">Username</label>
     					</div>
     					<div class="mdl-textfield mdl-js-textfield">
-    						<input class="mdl-textfield__input" type="password" id="userpass" />
+    						<input class="mdl-textfield__input" type="password" id="userpass" value="${user.password}"/>
     						<label class="mdl-textfield__label" for="userpass">Password</label>
     					</div>
     				</form>
     			</div>
     			<div class="mdl-card__actions mdl-card--border">
-    				<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Save</button>
+    				<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"  type="submit" value="Save">Save</button>
     			</div>
     		</div>
     	</main>
     </div>
+  </form>
   <script src="js/scripts.js"></script>
 </body>
 </html>
