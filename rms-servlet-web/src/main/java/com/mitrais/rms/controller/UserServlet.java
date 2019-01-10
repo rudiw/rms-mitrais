@@ -20,42 +20,31 @@ public class UserServlet extends AbstractController {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.err.println("servletPath: " + req.getServletPath());
         System.err.println("pathInfo: " + req.getPathInfo());
-        switch (req.getPathInfo()) {
-            case "/list":
-                findAll(req, resp);
-                break;
-            case "/delete":
-                try {
+        try {
+            switch (req.getPathInfo()) {
+                case "/list":
+                    findAll(req, resp);
+                    break;
+                case "/delete":
                     delete(req, resp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "/new":
-                showNewForm(req, resp);
-                break;
-            case "/edit":
-                try {
+                    break;
+                case "/new":
+                    showNewForm(req, resp);
+                    break;
+                case "/edit":
                     showEditForm(req, resp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "/update":
-                try {
+                    break;
+                case "/update":
                     update(req, resp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "/insert":
-                try {
+                    break;
+                case "/insert":
                     insert(req, resp);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
+                    break;
+            }
+        } catch (Exception e) {
+            throw new ServletException(e);
         }
+
     }
 
     @Override
@@ -83,15 +72,14 @@ public class UserServlet extends AbstractController {
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        final String path = getTemplatePath("/form");
-
+        final String path = getTemplatePath( request.getServletPath() +  "/form");
+        System.err.println("Got custom path: " + path);
         final RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-
         dispatcher.forward(request, response);
     }
 
     private void insert(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+            throws IOException {
         final String userName = request.getParameter("username");
         final String userPass = request.getParameter("userpass");
 
@@ -103,26 +91,27 @@ public class UserServlet extends AbstractController {
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, ServletException, IOException {
+            throws ServletException, IOException {
         final Long id = Long.parseLong(request.getParameter("id"));
 
         final UserDao userDao = UserDaoImpl.getInstance();
         final Optional<User> opt = userDao.find(id);
 
-        final String path = getTemplatePath("/form");
+        final String path = getTemplatePath(request.getServletPath() + "/form");
 
         final RequestDispatcher dispatcher = request.getRequestDispatcher(path);
         request.setAttribute("user", opt.get());
         dispatcher.forward(request, response);
+
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
+            throws IOException {
         final long id = Long.parseLong(request.getParameter("id"));
         final String userName = request.getParameter("username");
         final String userPass = request.getParameter("userpass");
 
-        final User upUser = new User(null, userName, userPass);
+        final User upUser = new User(id, userName, userPass);
         final UserDao userDao = UserDaoImpl.getInstance();
         userDao.modify(upUser);
         response.sendRedirect("list");

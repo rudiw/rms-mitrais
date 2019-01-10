@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" session="false"%>
 <%@ taglib prefix = "rms" uri = "/WEB-INF/tags/link.tld"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,19 +21,19 @@
 </head>
 
 <body>
-    <c:if test="${book != null}">
+    <c:if test="${user != null}">
         <form action="update" method="post">
     </c:if>
-    <c:if test="${book == null}">
+    <c:if test="${user == null}">
         <form action="insert" method="post">
     </c:if>
      <caption>
         <h2>
             <c:if test="${user != null}">
-                Edit Book
+                Edit User
             </c:if>
             <c:if test="${user == null}">
-                Add New Book
+                Add New User
             </c:if>
         </h2>
     </caption>
@@ -48,11 +49,11 @@
     	  	<div class="mdl-card__supporting-text">
     				<form action="#">
     					<div class="mdl-textfield mdl-js-textfield">
-    						<input class="mdl-textfield__input" type="text" id="username" value="${user.userName}" />
+    						<input class="mdl-textfield__input" type="text" name="username" value="<c:out value='${user.userName}' />" />
     						<label class="mdl-textfield__label" for="username">Username</label>
     					</div>
     					<div class="mdl-textfield mdl-js-textfield">
-    						<input class="mdl-textfield__input" type="password" id="userpass" value="${user.password}"/>
+    						<input class="mdl-textfield__input" type="password" name="userpass" value="<c:out value='${user.password}' />"/>
     						<label class="mdl-textfield__label" for="userpass">Password</label>
     					</div>
     				</form>
